@@ -2,8 +2,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var handlebars = require('express-handlebars');
 
-var Posts = require('./models')['Posts'];
-Post.synce();
+global.db = require('./models');
+
+
 
 var app = express();
 
@@ -32,6 +33,8 @@ app.get('/post/:id', function(req, res) {
 });
 
 var port = process.env.PORT || 3000;
-app.listen(port, function() {
-	console.log('connected to PORT' , port);
+db.sequelize.sync().then(function(){
+	app.listen(port, function() {
+		console.log('connected to PORT' , port);
+	});	
 });
