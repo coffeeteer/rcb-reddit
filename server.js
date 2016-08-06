@@ -53,10 +53,18 @@ app.post('/new-post', function(req, res) {
 		console.log('data', data);
 		//redirect to the posts/:id page
 		res.redirect('/posts/' + data.dataValues.id);
+		console.log(data.dataValues.id);
+		console.log(data.dataValues);
 	});
 });
 
 app.get('/post/:id', function(req, res) {
+	var id = req.params.id;
+	Post.findOne({
+		where: {
+			id: id
+		}
+	})
 	res.render('post');
 });
 
