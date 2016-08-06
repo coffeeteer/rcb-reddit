@@ -4,6 +4,9 @@ var handlebars = require('express-handlebars');
 
 global.db = require('./models');
 
+//var Posts = require('./models')['Posts']; Matt's original option
+//Posts.sync();
+
 
 
 var app = express();
@@ -20,8 +23,16 @@ app.engine('handlebars', handlebars({
 
 app.set('view engine', 'handlebars');
 
+//Home Page
 app.get('/', function(req, res) {
-	res.render('index');
+	
+	Posts.findAll({}).then(function(result){
+		console.log(result);
+		return res.render('index', {
+			posts: result
+		});
+	});
+	
 });
 
 app.get('/new-post', function(req, res) {
