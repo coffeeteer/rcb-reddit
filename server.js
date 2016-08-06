@@ -4,8 +4,8 @@ var handlebars = require('express-handlebars');
 
 global.db = require('./models');
 
-//var Posts = require('./models')['Posts']; Matt's original option
-//Posts.sync();
+var Posts = require('./models')['Posts']; //Matt's original option
+Posts.sync();
 
 
 
@@ -37,6 +37,23 @@ app.get('/', function(req, res) {
 
 app.get('/new-post', function(req, res) {
 	res.render('new');
+});
+
+app.post('/new-post', function(req, res) {
+	var body = req.body;
+	
+	// create the post in the database
+	Posts.create({
+		title: body.title,
+		url: body.url,
+		image: body.image,
+		score: 0,
+		description: body.description
+	}).then(function(data){
+		console.log('data', data);
+		//redirect to the posts/:id page
+		res.redirect('/posts/' + data.dataValues.id);
+	});
 });
 
 app.get('/post/:id', function(req, res) {
