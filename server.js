@@ -64,8 +64,12 @@ app.get('/:posts/:id', function(req, res) {
 		where: {
 			id: id
 		}
-	})
-	res.render('post');
+	}).then(function(post) {
+		console.log(post);
+		res.render('post', {
+			post: post
+		});
+	});
 });
 
 var port = process.env.PORT || 3000;
