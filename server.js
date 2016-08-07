@@ -58,9 +58,9 @@ app.post('/new-post', function(req, res) {
 	});
 });
 
-app.get('/post/:id', function(req, res) {
+app.get('/:posts/:id', function(req, res) {
 	var id = req.params.id;
-	Post.findOne({
+	Posts.findOne({
 		where: {
 			id: id
 		}
